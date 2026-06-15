@@ -1,0 +1,7 @@
+# Keep the personal resume (with private contact info) out of the public repo
+AddyResume.jpeg
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
