@@ -20,10 +20,10 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: "Roboto Condensed", "Arial Narrow", system-ui, sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
   color: var(--ink);
   background: var(--bg);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 h1, h2, h3 { font-family: "Poppins", sans-serif; line-height: 1.2; margin: 0; }
