@@ -33,9 +33,10 @@
 .fa-field .req { color: #b4632b; }
 
 .fa-field input[type="text"],
+.fa-field input[type="number"],
 .fa-field textarea {
   width: 100%;
-  font-family: "Inter", sans-serif;
+  font-family: inherit;
   font-size: 1rem;
   color: var(--ink);
   background: var(--bg);
@@ -46,13 +47,14 @@
 }
 .fa-field textarea { resize: vertical; line-height: 1.55; }
 .fa-field input[type="text"]:focus,
+.fa-field input[type="number"]:focus,
 .fa-field textarea:focus {
   outline: none;
   border-color: var(--tan);
   box-shadow: 0 0 0 3px rgba(200, 168, 120, .25);
 }
 .fa-field input[type="file"] {
-  font-family: "Inter", sans-serif;
+  font-family: inherit;
   font-size: .95rem;
   color: var(--muted);
 }
@@ -90,7 +92,7 @@
 .fa-linkrow { display: flex; gap: 10px; flex-wrap: wrap; }
 .fa-linkrow input {
   flex: 1 1 280px;
-  font-family: "Inter", sans-serif;
+  font-family: inherit;
   font-size: .9rem;
   color: var(--ink);
   background: var(--bg);

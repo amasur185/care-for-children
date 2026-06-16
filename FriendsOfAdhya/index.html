@@ -7,7 +7,7 @@
   <meta name="description" content="Create your own personal fundraising page for Care For Children, inspired by Adhya Masur's fundraiser." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="friends.css" />
   <script src="app.js"></script>
@@ -70,6 +70,19 @@
         <div class="fa-field">
           <label for="vision">Vision &amp; mission</label>
           <textarea id="vision" name="vision" rows="3" placeholder="The bigger picture — the change you want to see."></textarea>
+        </div>
+      </div>
+
+      <div class="fa-card">
+        <h2 class="fa-h2">Fundraising Counter</h2>
+        <p class="fa-help">These show as an animated counter on your page. You can update them anytime by editing your link. (Amounts are entered manually — they aren't pulled live from the donation site.)</p>
+        <div class="fa-field">
+          <label for="goal">Your fundraising goal ($)</label>
+          <input id="goal" name="goal" type="number" min="0" step="1" placeholder="e.g. 1000" />
+        </div>
+        <div class="fa-field">
+          <label for="raised">Amount raised so far ($)</label>
+          <input id="raised" name="raised" type="number" min="0" step="1" placeholder="e.g. 250" />
         </div>
       </div>
 
@@ -178,6 +191,8 @@
         achievements: document.getElementById("achievements").value.trim(),
         goals: document.getElementById("goals").value.trim(),
         vision: document.getElementById("vision").value.trim(),
+        goal: parseFloat(document.getElementById("goal").value) || 0,
+        raised: parseFloat(document.getElementById("raised").value) || 0,
         programs: [...document.querySelectorAll("#fa-programs input:checked")].map((c) => c.value),
         photo: currentPhoto,
       };

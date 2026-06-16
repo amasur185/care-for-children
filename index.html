@@ -7,7 +7,7 @@
   <meta name="description" content="Adhya Masur's personal fundraiser supporting Care For Children, providing free holistic education for underprivileged children across rural India." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -20,7 +20,10 @@
       <a href="#why">Why I'm Raising Funds</a>
       <a href="#help">How I'll Help</a>
       <a href="#programs">Programs</a>
-      <a class="nav__join" href="FriendsOfAdhya/index.html">Want to join Adhya?</a>
+      <a class="nav__join" href="FriendsOfAdhya/index.html">
+        <span class="nav__join-q">Want to join Adhya?</span>
+        <span class="nav__join-a">Create your own page →</span>
+      </a>
       <a class="nav__donate" href="https://careforchildren.kindful.com/" target="_blank" rel="noopener">Donate</a>
     </nav>
   </header>
@@ -49,6 +52,17 @@
         </div>
         <p class="hero__note">100% of donations go directly to Care For Children through their official platform.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ===== FUNDS RAISED COUNTER =====
+       Update data-raised and data-goal below as funds come in. -->
+  <section class="raised" id="raised" data-raised="0" data-goal="5000">
+    <div class="raised__inner">
+      <span class="kicker">Together, Adhya &amp; friends have raised</span>
+      <div class="raised__amount">$0</div>
+      <div class="raised__bar"><div class="raised__fill"></div></div>
+      <p class="raised__meta"></p>
     </div>
   </section>
 
@@ -248,6 +262,39 @@
     </div>
     <p class="footer__fine">This is a personal fundraising page in support of Care For Children. All donations are processed directly by Care For Children.</p>
   </footer>
+
+  <script>
+    /* Animate the funds-raised counter */
+    (function () {
+      var sec = document.getElementById("raised");
+      if (!sec) return;
+      var raised = parseFloat(sec.dataset.raised) || 0;
+      var goal = parseFloat(sec.dataset.goal) || 0;
+      var pct = goal > 0 ? Math.min(100, (raised / goal) * 100) : 0;
+      var amountEl = sec.querySelector(".raised__amount");
+      var fillEl = sec.querySelector(".raised__fill");
+      var metaEl = sec.querySelector(".raised__meta");
+      function money(n) { return "$" + Math.round(n).toLocaleString(); }
+      if (metaEl) metaEl.textContent = goal > 0 ? money(raised) + " raised of " + money(goal) + " goal" : money(raised) + " raised";
+      function run() {
+        var start = performance.now(), dur = 1500;
+        function tick(now) {
+          var p = Math.min((now - start) / dur, 1);
+          var e = 1 - Math.pow(1 - p, 3);
+          if (amountEl) amountEl.textContent = money(raised * e);
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        if (fillEl) requestAnimationFrame(function () { fillEl.style.width = pct + "%"; });
+      }
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { run(); io.disconnect(); } });
+        }, { threshold: 0.4 });
+        io.observe(sec);
+      } else { run(); }
+    })();
+  </script>
 
 </body>
 </html>

@@ -20,10 +20,10 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Univers Condensed", "Roboto Condensed", "Arial Narrow", system-ui, sans-serif;
   color: var(--ink);
   background: var(--bg);
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 h1, h2, h3 { font-family: "Poppins", sans-serif; line-height: 1.2; margin: 0; }
@@ -62,20 +62,26 @@ a { color: inherit; }
 }
 .nav__donate:hover { background: #5f4727; }
 .nav__links a.nav__join {
-  font-size: .8rem;
-  font-weight: 600;
-  color: var(--tan-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+  text-align: center;
   border: 1.5px solid var(--tan);
-  padding: 6px 13px;
-  border-radius: 999px;
+  padding: 5px 14px;
+  border-radius: 14px;
   white-space: nowrap;
 }
-.nav__links a.nav__join:hover { background: var(--tint); color: var(--brown); }
+.nav__join-q { font-size: .68rem; font-weight: 400; color: var(--muted); }
+.nav__join-a { font-size: .82rem; font-weight: 700; color: var(--brown); }
+.nav__links a.nav__join:hover { background: var(--tint); }
 @media (max-width: 760px) {
   .nav__links a:not(.nav__donate):not(.nav__join) { display: none; }
+  .nav__join-q { display: none; }
 }
 @media (max-width: 420px) {
-  .nav__links a.nav__join { font-size: .72rem; padding: 5px 10px; }
+  .nav__join-a { font-size: .74rem; }
+  .nav__links a.nav__join { padding: 6px 10px; }
 }
 
 /* ===== Buttons ===== */
@@ -409,6 +415,37 @@ a { color: inherit; }
 
 /* Donate button micro-interaction */
 .donate .btn--lg { box-shadow: 0 10px 28px rgba(0, 0, 0, .18); }
+
+/* Fundraising counter */
+.raised {
+  background: var(--bg);
+  padding: clamp(44px, 7vw, 76px) clamp(20px, 5vw, 64px);
+  text-align: center;
+}
+.raised__inner { max-width: 620px; margin: 0 auto; }
+.raised__amount {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  line-height: 1;
+  color: var(--brown);
+  margin: 10px 0 20px;
+}
+.raised__bar {
+  height: 16px;
+  background: var(--tint);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.raised__fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--tan), var(--tan-dark));
+  transition: width 1.4s cubic-bezier(.2, .7, .2, 1);
+}
+.raised__meta { color: var(--muted); margin-top: 14px; font-weight: 700; }
 
 /* Join / Friends of Adhya band */
 .join {

@@ -141,6 +141,25 @@ function renderBodyHTML(d) {
   const name = esc(d.name || "A Friend of Adhya");
   const website = safeLink(d.website);
 
+  /* Fundraising counter */
+  const raised = Number(d.raised) || 0;
+  const goal = Number(d.goal) || 0;
+  const pct = goal > 0 ? Math.min(100, (raised / goal) * 100) : 0;
+  const money = (n) => "$" + Math.round(n).toLocaleString();
+  const counterMeta =
+    goal > 0
+      ? money(raised) + " raised of " + money(goal) + " goal"
+      : money(raised) + " raised";
+  const counterSection = `
+  <section class="raised" data-raised="${raised}" data-goal="${goal}">
+    <div class="raised__inner">
+      <span class="kicker">My fundraising so far</span>
+      <div class="raised__amount" data-target="${raised}">$0</div>
+      <div class="raised__bar"><div class="raised__fill" data-width="${pct}"></div></div>
+      <p class="raised__meta">${esc(counterMeta)}</p>
+    </div>
+  </section>`;
+
   const photo = d.photo
     ? `<img src="${d.photo}" alt="Photo of ${name}" />`
     : `<span class="photo-frame__hint">Photo coming soon</span>`;
@@ -224,6 +243,8 @@ function renderBodyHTML(d) {
     </div>
   </section>
 
+  ${counterSection}
+
   <section class="stats" aria-label="Care For Children impact">
     <div class="stats__inner">
       <div class="stat"><span class="stat__num">120,000+</span><span class="stat__label">Children Educated</span></div>
@@ -277,6 +298,27 @@ function renderBodyHTML(d) {
   </footer>`;
 }
 
+/* Animate any .raised counters within a scope (used by view.html & downloads) */
+function initCounters(scope) {
+  (scope || document).querySelectorAll(".raised").forEach(function (sec) {
+    var raised = parseFloat(sec.dataset.raised) || 0;
+    var goal = parseFloat(sec.dataset.goal) || 0;
+    var pct = goal > 0 ? Math.min(100, (raised / goal) * 100) : 0;
+    var amountEl = sec.querySelector(".raised__amount");
+    var fillEl = sec.querySelector(".raised__fill");
+    var startT = performance.now(), dur = 1500;
+    function money(n) { return "$" + Math.round(n).toLocaleString(); }
+    function tick(now) {
+      var p = Math.min((now - startT) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      if (amountEl) amountEl.textContent = money(raised * e);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    if (fillEl) requestAnimationFrame(function () { fillEl.style.width = pct + "%"; });
+  });
+}
+
 /* Build a fully standalone HTML file (CSS inlined) for download */
 function buildStandaloneHTML(d, cssText) {
   const name = esc(d.name || "A Friend of Adhya");
@@ -288,13 +330,17 @@ function buildStandaloneHTML(d, cssText) {
 <title>${name} · Fundraising for Care For Children</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet" />
 <style>
 ${cssText}
 </style>
 </head>
 <body>
 ${renderBodyHTML(d)}
+<script>
+${initCounters.toString()}
+initCounters(document);
+</script>
 </body>
 </html>`;
 }
