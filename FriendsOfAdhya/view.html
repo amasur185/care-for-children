@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fundraising for Care For Children · A Friend of Adhya</title>
+  <meta name="description" content="A personal fundraiser supporting Care For Children, inspired by Adhya Masur." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="app.js"></script>
+</head>
+<body>
+  <div id="root">
+    <section class="section" style="text-align:center;">
+      <div class="section__head"><span class="kicker">Friends of Adhya</span><h2>Loading…</h2></div>
+    </section>
+  </div>
+
+  <script>
+    (async function () {
+      const root = document.getElementById("root");
+      const enc = location.hash.slice(1);
+      if (!enc) {
+        root.innerHTML =
+          '<section class="section" style="text-align:center;">' +
+          '<div class="section__head"><span class="kicker">Friends of Adhya</span><h2>No page data found</h2>' +
+          '<p class="section__sub">This link looks incomplete. Create your own fundraiser page below.</p></div>' +
+          '<div style="text-align:center;"><a class="btn btn--primary" href="index.html">Create my page</a></div>' +
+          "</section>";
+        return;
+      }
+      try {
+        const data = await decodeData(enc);
+        document.title = (data.name || "A Friend of Adhya") + " · Fundraising for Care For Children";
+        root.innerHTML = renderBodyHTML(data);
+      } catch (e) {
+        root.innerHTML =
+          '<section class="section" style="text-align:center;">' +
+          '<div class="section__head"><span class="kicker">Friends of Adhya</span><h2>Couldn\'t load this page</h2>' +
+          '<p class="section__sub">The link may be corrupted. Try creating a new one.</p></div>' +
+          '<div style="text-align:center;"><a class="btn btn--primary" href="index.html">Create my page</a></div>' +
+          "</section>";
+      }
+    })();
+  </script>
+</body>
+</html>

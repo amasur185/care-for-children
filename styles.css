@@ -397,6 +397,28 @@ a { color: inherit; }
 /* Donate button micro-interaction */
 .donate .btn--lg { box-shadow: 0 10px 28px rgba(0, 0, 0, .18); }
 
+/* Join / Friends of Adhya band */
+.join {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--tint);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(36px, 6vw, 56px);
+  box-shadow: var(--shadow-sm);
+}
+.join h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); color: var(--brown); margin: 6px 0 14px; }
+.join p { color: var(--muted); max-width: 520px; margin: 0 auto 26px; }
+
+/* Sub-headings inside friend-generated About sections */
+.fa-sub {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.15rem;
+  color: var(--brown);
+  margin: 26px 0 8px;
+}
+
 /* Gentle scroll-reveal */
 @media (prefers-reduced-motion: no-preference) {
   .card, .help, .program, .stat { animation: rise .6s ease both; }

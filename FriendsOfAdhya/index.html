@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join Adhya · Create Your Care For Children Fundraiser</title>
+  <meta name="description" content="Create your own personal fundraising page for Care For Children, inspired by Adhya Masur's fundraiser." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="friends.css" />
+  <script src="app.js"></script>
+</head>
+<body>
+
+  <header class="nav">
+    <a href="../index.html" class="nav__brand">← Adhya's Fundraiser</a>
+    <nav class="nav__links">
+      <a class="nav__donate" href="https://careforchildren.kindful.com/" target="_blank" rel="noopener">Donate</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero__inner hero__inner--single">
+      <div class="hero__text" style="text-align:center;max-width:680px;margin:0 auto;">
+        <p class="hero__eyebrow">Friends of Adhya</p>
+        <h1>Want to join Adhya in raising funds?</h1>
+        <p class="hero__lead" style="margin-left:auto;margin-right:auto;">
+          Fill in the form below and we'll instantly build your own fundraising page for
+          Care For Children, styled just like Adhya's. You'll get a shareable link in seconds.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <form id="fa-form" class="fa-form" novalidate>
+
+      <div class="fa-card">
+        <h2 class="fa-h2">The Basics</h2>
+        <div class="fa-field">
+          <label for="name">Your name <span class="req">*</span></label>
+          <input id="name" name="name" type="text" required placeholder="e.g. Priya Sharma" />
+        </div>
+        <div class="fa-field">
+          <label for="why">Why do you want to do this?</label>
+          <textarea id="why" name="why" rows="3" placeholder="One or two sentences on what inspires you to raise funds."></textarea>
+        </div>
+        <div class="fa-field">
+          <label for="website">Your website or social link</label>
+          <input id="website" name="website" type="text" placeholder="e.g. instagram.com/yourname (optional)" />
+        </div>
+      </div>
+
+      <div class="fa-card">
+        <h2 class="fa-h2">About Me</h2>
+        <div class="fa-field">
+          <label for="who">Who you are</label>
+          <textarea id="who" name="who" rows="4" placeholder="Introduce yourself — your background, interests, and what you care about."></textarea>
+        </div>
+        <div class="fa-field">
+          <label for="achievements">Your achievements</label>
+          <textarea id="achievements" name="achievements" rows="3" placeholder="Awards, activities, volunteer work — anything you're proud of. One per line."></textarea>
+        </div>
+        <div class="fa-field">
+          <label for="goals">Your goals in this fundraiser</label>
+          <textarea id="goals" name="goals" rows="3" placeholder="What you hope to accomplish."></textarea>
+        </div>
+        <div class="fa-field">
+          <label for="vision">Vision &amp; mission</label>
+          <textarea id="vision" name="vision" rows="3" placeholder="The bigger picture — the change you want to see."></textarea>
+        </div>
+      </div>
+
+      <div class="fa-card">
+        <h2 class="fa-h2">Programs You Want to Support</h2>
+        <p class="fa-help">Pick one or more. (If you skip this, all programs will be shown.)</p>
+        <div class="fa-checks" id="fa-programs"></div>
+      </div>
+
+      <div class="fa-card">
+        <h2 class="fa-h2">Your Photo</h2>
+        <p class="fa-help">A portrait works best. It stays in your link only — it is never uploaded to a server.</p>
+        <div class="fa-field">
+          <input id="photo" name="photo" type="file" accept="image/*" />
+          <div id="photo-preview" class="fa-photo-preview" hidden>
+            <img id="photo-preview-img" alt="Your photo preview" />
+          </div>
+        </div>
+      </div>
+
+      <div class="fa-actions">
+        <button type="submit" class="btn btn--primary btn--lg" id="generate-btn">Create My Page ✨</button>
+      </div>
+    </form>
+
+    <!-- Result panel -->
+    <div id="fa-result" class="fa-result" hidden>
+      <div class="fa-card fa-card--accent">
+        <h2 class="fa-h2">🎉 Your page is ready!</h2>
+        <p class="fa-help">Copy your personal link and share it with anyone. It works immediately — no sign-up needed.</p>
+        <div class="fa-linkrow">
+          <input id="fa-link" type="text" readonly />
+          <button type="button" class="btn btn--primary" id="copy-btn">Copy</button>
+        </div>
+        <div class="fa-actions fa-actions--inline">
+          <a id="open-btn" class="btn btn--ghost" target="_blank" rel="noopener">Open my page ↗</a>
+          <button type="button" class="btn btn--outline" id="download-btn">Download my page (.html)</button>
+          <button type="button" class="btn btn--outline" id="edit-btn">Edit my answers</button>
+        </div>
+        <details class="fa-details">
+          <summary>Want it hosted under Adhya's GitHub (FriendsOfAdhya)?</summary>
+          <p>
+            Download your page above (it saves as <code>index.html</code>), then send the file to
+            Adhya. She can drop it into a folder like
+            <code>FriendsOfAdhya/your-name/</code> in the project, and it will go live at
+            <code>amasur185.github.io/care-for-children/FriendsOfAdhya/your-name/</code>.
+            Until then, your shareable link above already works everywhere.
+          </p>
+        </details>
+      </div>
+
+      <div class="fa-preview-wrap">
+        <h2 class="fa-h2">Live Preview</h2>
+        <iframe id="fa-preview" class="fa-preview" title="Preview of your page"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p class="footer__fine" style="text-align:center;">
+      Friends of Adhya · In support of
+      <a href="https://www.careforchildren.org/" target="_blank" rel="noopener" style="color:var(--tan);">Care For Children</a>.
+      All donations are processed directly by Care For Children.
+    </p>
+  </footer>
+
+  <script>
+    /* Build program checkboxes */
+    const progWrap = document.getElementById("fa-programs");
+    Object.keys(PROGRAMS).forEach((key) => {
+      const p = PROGRAMS[key];
+      const id = "prog-" + key;
+      const label = document.createElement("label");
+      label.className = "fa-check";
+      label.innerHTML =
+        '<input type="checkbox" value="' + key + '" id="' + id + '" />' +
+        '<span><strong>' + p.title + "</strong><small>" + p.desc + "</small></span>";
+      progWrap.appendChild(label);
+    });
+
+    let currentPhoto = "";
+
+    /* Photo preview + resize */
+    const photoInput = document.getElementById("photo");
+    const photoPrev = document.getElementById("photo-preview");
+    const photoPrevImg = document.getElementById("photo-preview-img");
+    photoInput.addEventListener("change", async () => {
+      const file = photoInput.files && photoInput.files[0];
+      if (!file) { currentPhoto = ""; photoPrev.hidden = true; return; }
+      try {
+        currentPhoto = await resizeImage(file, 480, 0.72);
+        photoPrevImg.src = currentPhoto;
+        photoPrev.hidden = false;
+      } catch (e) {
+        alert("Sorry, that image couldn't be processed. Try a different photo.");
+        currentPhoto = "";
+      }
+    });
+
+    function collect() {
+      return {
+        name: document.getElementById("name").value.trim(),
+        why: document.getElementById("why").value.trim(),
+        website: document.getElementById("website").value.trim(),
+        who: document.getElementById("who").value.trim(),
+        achievements: document.getElementById("achievements").value.trim(),
+        goals: document.getElementById("goals").value.trim(),
+        vision: document.getElementById("vision").value.trim(),
+        programs: [...document.querySelectorAll("#fa-programs input:checked")].map((c) => c.value),
+        photo: currentPhoto,
+      };
+    }
+
+    const form = document.getElementById("fa-form");
+    const result = document.getElementById("fa-result");
+    let cssCache = null;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = collect();
+      if (!data.name) {
+        alert("Please enter your name so we can build your page.");
+        document.getElementById("name").focus();
+        return;
+      }
+      const enc = await encodeData(data);
+      const base = location.href.replace(/index\.html.*$/, "").replace(/[^/]*$/, "");
+      const link = base + "view.html#" + enc;
+
+      document.getElementById("fa-link").value = link;
+      document.getElementById("open-btn").href = "view.html#" + enc;
+
+      /* Live preview via standalone HTML (so styles are included) */
+      if (!cssCache) {
+        try { cssCache = await (await fetch("../styles.css")).text(); }
+        catch (e2) { cssCache = ""; }
+      }
+      const standalone = buildStandaloneHTML(data, cssCache);
+      document.getElementById("fa-preview").srcdoc = standalone;
+
+      /* Wire download */
+      document.getElementById("download-btn").onclick = () => {
+        const blob = new Blob([standalone], { type: "text/html" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "index.html";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      };
+
+      result.hidden = false;
+      result.scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.getElementById("copy-btn").addEventListener("click", () => {
+      const inp = document.getElementById("fa-link");
+      inp.select();
+      navigator.clipboard.writeText(inp.value).then(() => {
+        const btn = document.getElementById("copy-btn");
+        const old = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => (btn.textContent = old), 1600);
+      });
+    });
+
+    document.getElementById("edit-btn").addEventListener("click", () => {
+      result.hidden = true;
+      form.scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
