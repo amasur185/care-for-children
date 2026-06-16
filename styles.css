@@ -61,8 +61,21 @@ a { color: inherit; }
   font-weight: 600;
 }
 .nav__donate:hover { background: #5f4727; }
+.nav__links a.nav__join {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--tan-dark);
+  border: 1.5px solid var(--tan);
+  padding: 6px 13px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.nav__links a.nav__join:hover { background: var(--tint); color: var(--brown); }
 @media (max-width: 760px) {
-  .nav__links a:not(.nav__donate) { display: none; }
+  .nav__links a:not(.nav__donate):not(.nav__join) { display: none; }
+}
+@media (max-width: 420px) {
+  .nav__links a.nav__join { font-size: .72rem; padding: 5px 10px; }
 }
 
 /* ===== Buttons ===== */
