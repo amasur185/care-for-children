@@ -159,6 +159,16 @@ a { color: inherit; }
   margin: 0 0 8px;
 }
 .hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 800; color: var(--brown); }
+.brand-tld { font-size: .4em; font-weight: 600; color: var(--tan-dark); vertical-align: baseline; }
+.hero__chapter {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: .82rem;
+  color: var(--tan-dark);
+  margin: 8px 0 0;
+}
 .hero__lead { font-size: clamp(1.05rem, 2vw, 1.2rem); color: var(--muted); margin: 18px 0 28px; max-width: 540px; }
 .hero__cta { display: flex; gap: 14px; flex-wrap: wrap; }
 .hero__note { font-size: .85rem; color: var(--muted); margin-top: 18px; }

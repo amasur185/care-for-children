@@ -229,7 +229,8 @@ function renderBodyHTML(d) {
       </div>
       <div class="hero__text">
         <p class="hero__eyebrow">A personal fundraiser for</p>
-        <h1>Care For Children</h1>
+        <h1>Care For Children<span class="brand-tld">.org</span></h1>
+        <p class="hero__chapter">San Diego Youth Chapter</p>
         <p class="hero__lead">
           Hi, I'm <strong>${name}</strong>, and I'm raising funds to give underprivileged
           children in rural India free, holistic education and a real chance at a brighter future.
