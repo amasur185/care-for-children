@@ -154,7 +154,7 @@ function renderBodyHTML(d) {
   <section class="raised" data-raised="${raised}" data-goal="${goal}">
     <div class="raised__inner">
       <span class="kicker">My fundraising so far</span>
-      <div class="raised__amount" data-target="${raised}">$0</div>
+      <div class="raised__amount" data-target="${raised}"><span class="raised__cur">$</span>0</div>
       <div class="raised__bar"><div class="raised__fill" data-width="${pct}"></div></div>
       <p class="raised__meta">${esc(counterMeta)}</p>
     </div>
@@ -308,11 +308,11 @@ function initCounters(scope) {
     var amountEl = sec.querySelector(".raised__amount");
     var fillEl = sec.querySelector(".raised__fill");
     var startT = performance.now(), dur = 1500;
-    function money(n) { return "$" + Math.round(n).toLocaleString(); }
+    function bigMoney(n) { return '<span class="raised__cur">$</span>' + Math.round(n).toLocaleString(); }
     function tick(now) {
       var p = Math.min((now - startT) / dur, 1);
       var e = 1 - Math.pow(1 - p, 3);
-      if (amountEl) amountEl.textContent = money(raised * e);
+      if (amountEl) amountEl.innerHTML = bigMoney(raised * e);
       if (p < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);

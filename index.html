@@ -61,7 +61,7 @@
   <section class="raised" id="raised" data-raised="0" data-goal="5000">
     <div class="raised__inner">
       <span class="kicker">Total funds raised by San Diego Youth Chapter</span>
-      <div class="raised__amount">$0</div>
+      <div class="raised__amount"><span class="raised__cur">$</span>0</div>
       <div class="raised__bar"><div class="raised__fill"></div></div>
       <p class="raised__meta"></p>
     </div>
@@ -276,13 +276,14 @@
       var fillEl = sec.querySelector(".raised__fill");
       var metaEl = sec.querySelector(".raised__meta");
       function money(n) { return "$" + Math.round(n).toLocaleString(); }
+      function bigMoney(n) { return '<span class="raised__cur">$</span>' + Math.round(n).toLocaleString(); }
       if (metaEl) metaEl.textContent = goal > 0 ? money(raised) + " raised of " + money(goal) + " goal" : money(raised) + " raised";
       function run() {
         var start = performance.now(), dur = 1500;
         function tick(now) {
           var p = Math.min((now - start) / dur, 1);
           var e = 1 - Math.pow(1 - p, 3);
-          if (amountEl) amountEl.textContent = money(raised * e);
+          if (amountEl) amountEl.innerHTML = bigMoney(raised * e);
           if (p < 1) requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);

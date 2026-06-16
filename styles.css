@@ -455,6 +455,7 @@ a { color: inherit; }
   background: linear-gradient(90deg, var(--tan), var(--tan-dark));
   transition: width 1.4s cubic-bezier(.2, .7, .2, 1);
 }
+.raised__cur { font-size: .5em; font-weight: 700; vertical-align: 0.5em; margin-right: .04em; }
 .raised__meta { color: var(--muted); margin-top: 14px; font-weight: 700; }
 
 /* Join / Friends of Adhya band */
