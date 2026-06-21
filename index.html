@@ -265,36 +265,76 @@
   </footer>
 
   <script>
-    /* Animate the funds-raised counter */
+    /* ====================================================================
+       Funds-raised counter.
+       To auto-update from a Google Sheet, paste your "Publish to web" CSV
+       link between the quotes below. Leave it empty to use the numbers in
+       the <section class="raised" data-raised="..." data-goal="..."> markup.
+       Sheet layout (any sheet, any rows):  A1 raised | B1 365
+                                            A2 goal   | B2 10000
+       ==================================================================== */
+    var FUNDS_SHEET_CSV_URL = "";
+
     (function () {
       var sec = document.getElementById("raised");
       if (!sec) return;
-      var raised = parseFloat(sec.dataset.raised) || 0;
-      var goal = parseFloat(sec.dataset.goal) || 0;
-      var pct = goal > 0 ? Math.min(100, (raised / goal) * 100) : 0;
       var amountEl = sec.querySelector(".raised__amount");
       var fillEl = sec.querySelector(".raised__fill");
       var metaEl = sec.querySelector(".raised__meta");
       function money(n) { return "$" + Math.round(n).toLocaleString(); }
       function bigMoney(n) { return '<span class="raised__cur">$</span>' + Math.round(n).toLocaleString(); }
-      if (metaEl) metaEl.textContent = goal > 0 ? money(raised) + " raised of " + money(goal) + " goal" : money(raised) + " raised";
-      function run() {
-        var start = performance.now(), dur = 1500;
-        function tick(now) {
-          var p = Math.min((now - start) / dur, 1);
-          var e = 1 - Math.pow(1 - p, 3);
-          if (amountEl) amountEl.innerHTML = bigMoney(raised * e);
-          if (p < 1) requestAnimationFrame(tick);
+
+      function start(raised, goal) {
+        var pct = goal > 0 ? Math.min(100, (raised / goal) * 100) : 0;
+        if (metaEl) metaEl.textContent = goal > 0
+          ? money(raised) + " raised of " + money(goal) + " goal"
+          : money(raised) + " raised";
+        var ran = false;
+        function run() {
+          if (ran) return; ran = true;
+          if (fillEl) fillEl.style.width = pct + "%"; /* CSS transition handles fill */
+          var t0 = performance.now(), dur = 1500;
+          function tick(now) {
+            var p = Math.min((now - t0) / dur, 1);
+            var e = 1 - Math.pow(1 - p, 3);
+            if (amountEl) amountEl.innerHTML = bigMoney(raised * e);
+            if (p < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+          /* Safety net: guarantee the final value even if rAF is throttled */
+          setTimeout(function () { if (amountEl) amountEl.innerHTML = bigMoney(raised); }, dur + 400);
         }
-        requestAnimationFrame(tick);
-        if (fillEl) requestAnimationFrame(function () { fillEl.style.width = pct + "%"; });
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) { if (en.isIntersecting) { run(); io.disconnect(); } });
+          }, { threshold: 0.4 });
+          io.observe(sec);
+        }
+        /* Fallback: reveal even if the observer never fires */
+        setTimeout(run, 2500);
       }
-      if ("IntersectionObserver" in window) {
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (en) { if (en.isIntersecting) { run(); io.disconnect(); } });
-        }, { threshold: 0.4 });
-        io.observe(sec);
-      } else { run(); }
+
+      var fbRaised = parseFloat(sec.dataset.raised) || 0;
+      var fbGoal = parseFloat(sec.dataset.goal) || 0;
+
+      if (FUNDS_SHEET_CSV_URL) {
+        fetch(FUNDS_SHEET_CSV_URL, { cache: "no-store" })
+          .then(function (r) { return r.text(); })
+          .then(function (csv) {
+            var raised = fbRaised, goal = fbGoal;
+            csv.split(/\r?\n/).forEach(function (line) {
+              var parts = line.split(",");
+              var key = (parts[0] || "").trim().toLowerCase().replace(/^"|"$/g, "");
+              var val = parseFloat((parts[1] || "").replace(/[^0-9.]/g, ""));
+              if (key === "raised" && !isNaN(val)) raised = val;
+              if (key === "goal" && !isNaN(val)) goal = val;
+            });
+            start(raised, goal);
+          })
+          .catch(function () { start(fbRaised, fbGoal); });
+      } else {
+        start(fbRaised, fbGoal);
+      }
     })();
   </script>
 
