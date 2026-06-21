@@ -273,7 +273,7 @@
        Sheet layout (any sheet, any rows):  A1 raised | B1 365
                                             A2 goal   | B2 10000
        ==================================================================== */
-    var FUNDS_SHEET_CSV_URL = "";
+    var FUNDS_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRmN42luhx-rfkbcuLtWy2NmVIRd1s1tfSKF8_wW0VlYLMtqXPe5EvRwAEttWwlyOIen1bkEkH2w-jp/pub?output=csv";
 
     (function () {
       var sec = document.getElementById("raised");
@@ -323,11 +323,21 @@
           .then(function (csv) {
             var raised = fbRaised, goal = fbGoal;
             csv.split(/\r?\n/).forEach(function (line) {
-              var parts = line.split(",");
-              var key = (parts[0] || "").trim().toLowerCase().replace(/^"|"$/g, "");
-              var val = parseFloat((parts[1] || "").replace(/[^0-9.]/g, ""));
-              if (key === "raised" && !isNaN(val)) raised = val;
-              if (key === "goal" && !isNaN(val)) goal = val;
+              var cells = line.split(",").map(function (c) {
+                return c.trim().replace(/^"|"$/g, "");
+              });
+              for (var i = 0; i < cells.length; i++) {
+                var key = cells[i].toLowerCase();
+                if (key === "raised" || key === "goal") {
+                  for (var j = i + 1; j < cells.length; j++) {
+                    var num = parseFloat(cells[j].replace(/[^0-9.]/g, ""));
+                    if (!isNaN(num)) {
+                      if (key === "raised") raised = num; else goal = num;
+                      break;
+                    }
+                  }
+                }
+              }
             });
             start(raised, goal);
           })
